@@ -1,0 +1,13 @@
+.test{
+    border: 1px solid #336688;
+    width: 300px;
+    text-align: center;
+    margin: 15px auto ;
+
+}
+.blueText{
+    color: #0055ff;
+}
+.redText{
+    color: #ff5500;
+}

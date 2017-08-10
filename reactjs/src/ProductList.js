@@ -77,6 +77,7 @@ const ProductList = React.createClass({
         />
       );
     });
+    
     return (
       <div className="">
           <button onClick={this.modifyOrde}>调整排序</button>
