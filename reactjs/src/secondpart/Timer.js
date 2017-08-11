@@ -3,9 +3,9 @@ import './Timer.css';
 
 const Timer = React.createClass({
   millisecondToDate: function(msd) {
-    var time = parseFloat(msd) / 1000;
+    // var time = parseFloat(msd) / 1000;
      var leftsecond = parseInt(msd / 1000);
-    if (null != leftsecond && "" != leftsecond) {
+    if (null != leftsecond && "" != leftsecond&&leftsecond!==0) {
         var day = Math.floor(leftsecond / (60 * 60 * 24));
         var hour = Math.floor((leftsecond - day * 24 * 60 * 60) / 3600);
         var minute = Math.floor((leftsecond - day * 24 * 60 * 60 - hour * 3600) / 60);
@@ -39,8 +39,11 @@ const Timer = React.createClass({
     //   } else {
     //     time = parseInt(time) + "";
     //   }
-    }
     return hour+":"+minute+":"+second;
+    }else{
+        return "00:00:00";
+    }
+    
   },
   render: function() {
       const elapsedString = this.millisecondToDate(this.props.elapsed);
@@ -63,7 +66,9 @@ const Timer = React.createClass({
                         删除
                         <i className=''></i>
                     </span>
-                    <span className='blueText'>
+                    <span className='blueText'
+                        onClick={this.props.onEditClick}
+                    >
                         编辑
                         <i className=''></i>
                     </span>
