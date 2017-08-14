@@ -44,6 +44,9 @@ const EditableTimer = React.createClass({
                   elapsed={this.props.elapsed}
                   runningSince={this.props.runningSince}
                   onEditClick={this.handleEditClick}
+                  onTrashClick={this.props.onTrashClick}
+                  onStartClick={this.props.onStartClick}
+                  onStopClick={this.props.onStopClick}
                 />
             );
         }

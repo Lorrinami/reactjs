@@ -1,9 +1,19 @@
 import React from "react";
 import './Timer.css';
+import TimerActionButton from './TimerActionButton';
+import TimerOptionButton from './TimerOptionButton';
 
 const Timer = React.createClass({
-  millisecondToDate: function(msd) {
+   getInitialState: function() {
+    return {
+      hover:false,
+    };
+  },
+  millisecondToDate: function(msd,runningSince) {
     // var time = parseFloat(msd) / 1000;
+    if(runningSince!=null){
+        msd=msd+(Date.now()-runningSince);
+    }
      var leftsecond = parseInt(msd / 1000);
     if (null != leftsecond && "" != leftsecond&&leftsecond!==0) {
         var day = Math.floor(leftsecond / (60 * 60 * 24));
@@ -45,10 +55,32 @@ const Timer = React.createClass({
     }
     
   },
+  handleTrashClick:function(){
+    this.props.onTrashClick(this.props.id);
+  },
+  componentDidMount:function(){
+    this.forceUpdateInterval = setInterval(()=>this.forceUpdate(),50);
+  },
+  componentWillUnmount:function(){
+    clearInterval(this.forceUpdateInterval);
+  },
+  handleStartClick:function(){
+    this.props.onStartClick(this.props.id);
+  },
+  handleStopClick:function(){
+    this.props.onStopClick(this.props.id);
+  },
+  display:function(){
+    this.setState({hover:true,});
+  },
+  gone:function(){
+    this.setState({hover:false,});
+  },
   render: function() {
-      const elapsedString = this.millisecondToDate(this.props.elapsed);
+      const elapsedString = this.millisecondToDate(this.props.elapsed,this.props.runningSince);
       return(
-        <div className='test'>
+        <div className='test'
+        onMouseEnter={this.display} onMouseLeave={this.gone}>
             <div className=''>
                 <div className= ''>
                     {this.props.title}
@@ -61,22 +93,20 @@ const Timer = React.createClass({
                         {elapsedString}
                     </h2>
                 </div>
-                <div className=''>
-                    <span className='redText'>
-                        删除
-                        <i className=''></i>
-                    </span>
-                    <span className='blueText'
-                        onClick={this.props.onEditClick}
-                    >
-                        编辑
-                        <i className=''></i>
-                    </span>
-                </div>
+                <TimerOptionButton className=''
+                       onHandleTrashClick={this.handleTrashClick}
+                       onEditClick={this.props.onEditClick}
+                       isHover={this.state.hover}
+                >
+                  
+                </TimerOptionButton>
             </div>
-            <div className=''>
-                Start
-            </div>
+            <TimerActionButton
+                timerIsRunning={!!this.props.runningSince}
+                onStartClick={this.handleStartClick}
+                onStopClick={this.handleStopClick}
+            />
+            {console.log(this.props.id)}
         </div>
       );
   }
