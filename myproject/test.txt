@@ -1,0 +1,28 @@
+{  
+   "data":{  
+      "timers":[  
+         {  
+            "id":1,
+            "name":"soni"
+         }
+      ]
+   },
+   "status":200,
+   "config":{  
+      "method":"POST",
+      "transformRequest":[  
+         null
+      ],
+      "transformResponse":[  
+         null
+      ],
+      "url":"/home/main/module/userlist",
+      "headers":{  
+         "rt":"ajax",
+         "Tenant":"Id:null",
+         "Access-Handler":"Authorization:null",
+         "Accept":"application/json, text/plain, */*"
+      }
+   },
+   "statusText":"OK"
+}
