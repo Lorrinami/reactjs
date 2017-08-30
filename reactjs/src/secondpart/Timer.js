@@ -106,7 +106,6 @@ const Timer = React.createClass({
                 onStartClick={this.handleStartClick}
                 onStopClick={this.handleStopClick}
             />
-            {console.log(this.props.id)}
         </div>
       );
   }
