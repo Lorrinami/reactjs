@@ -6,6 +6,7 @@ import ButtonTwo from "../forms/ButtonTwo";
 import Input from "../forms/Input.jsx";
 import ControllInput from "../forms/ControllInput.jsx";
 import Form from '../forms/Form.jsx';
+import apiClient from '../apiClient';
 const uuidv4 = require("uuid/v4");
 var fetch = require("node-fetch"); //fetch网络请求,还有另外一个fetch库，注意区分不同。fetch默认为get请求。
 
@@ -25,15 +26,7 @@ const TimersDashboard = React.createClass({
         console.error(error);
       });
   },
-  checkStatus: function() {
-    //这个函数是在client. js中定义的。它检查服务器是否返回 一个错误。如果服务器返回一个错误，checkStatus()将错误记录到控制台
-  },
-  parseJSON: function() {
-    // 这个函数也在client . js中定义。它接收响应对象 由fetch()发出并返回一个JavaScript对象
-  },
-  success: function() {
-    // 这是我们作为gettimer()参数传递的函数。getTimers()将 如果服务器成功地返回响应，则调用此函数
-  },
+
   getInitialState: function() {
     return {
       timers: []
@@ -44,10 +37,10 @@ const TimersDashboard = React.createClass({
     // setInterval(this.loadTimersFromServer, 5000);
   },
   loadTimersFromServer: function() {
-    this.getTimers().then((serverTimers) => {
+    apiClient.getTimers((serverTimers) =>{
       console.log(serverTimers);
       this.setState({ timers: serverTimers });
-    });
+    })
   },
   create: function(timer) {
     return {
@@ -95,8 +88,11 @@ const TimersDashboard = React.createClass({
         } else {
           return timer;
         }
-      })
+      }),
     });
+    apiClient.startTimer({
+      id: timerId, start: now
+    })
   },
   stopTimer: function(timerId) {
     const now = Date.now();
@@ -113,6 +109,9 @@ const TimersDashboard = React.createClass({
         }
       })
     });
+    apiClient.stopTimer(
+      {id: timerId, stop: now}
+    )
   },
   updateTimer: function(attrs) {
     this.setState({
@@ -139,6 +138,8 @@ const TimersDashboard = React.createClass({
             onStartClick={this.handleStartClick}
             onStopClick={this.handleStopCLick}
           />
+
+         {apiClient.postTimers()}
           <ToggleableTimerForm onFormSubmit={this.handleCreateFormSubmit} />
           <Button></Button>
           <ButtonTwo></ButtonTwo>
