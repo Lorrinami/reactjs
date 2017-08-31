@@ -19,6 +19,19 @@ export default class CourseSelect extends React.Component{
         if(department) this.fetch(department);
     }
 
+    onSelectCourse(evt){
+        const course = evt.target.value;
+        this.setState({course});
+        this.props.onChange({name:'course',value:course});
+    }
+
+    fetch(department){
+        this.setState({_loading:true,courses:[]});//异步加载请求开启lodin界面
+        apiClient(department).then((courses) => {
+            this.setState({_loading:false,courses:courses});
+        });
+    }
+
     render(){
         return(
             <div>
