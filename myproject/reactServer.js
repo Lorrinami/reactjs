@@ -83,13 +83,17 @@ server.route({
           const timers = JSON.parse(data);
           console.log('timers',timers)
           for(let i=0;i<timers.length;i++){
-            timers[i].id==request.payload.id;
+            if(timers[i].id==request.payload.id){
+              timers[i].runningSince=request.payload.start;
+              break;
+            }
             console.log('找到了id')
           }
-          // fs.writeFile(DATA_FILE, "Hello Node.js", err => {
-          //   if (err) throw err;
-          //   console.log("It's saved!");
-          // });
+          console.log('timers',timers)
+          fs.writeFile(DATA_FILE, JSON.stringify(timers), err => {
+            if (err) throw err;
+            console.log("It's saved!");
+          });
           // reply(timers);
         }
       });
@@ -125,22 +129,29 @@ server.route({
       additionalHeaders: ["cache-control", "x-requested-with"]
     },
     handler: function(request, reply) {
-      console.log("stop", request.payload);
       const payload = request.payload;
-      // var path = __dirname + "/name.png";
-      // // var file = fs.createWriteStream(path);
-      // var writestream = fs.createWriteStream(path);
-      // writestream.on("close", function() {});
-      // payload.photo.pipe(writestream);
-      // var data = request.payload;
-      // var name = data.photo.hapi.filename;
-
-      // console.log(name);
-      // console.log(payload);
-      reply("Received your data");
+      fs.readFile(DATA_FILE, function(err, data) {
+        if (err) {
+          console.error(err);
+        } else {
+          const timers = JSON.parse(data);
+          for(let i=0;i<timers.length;i++){
+            if(timers[i].id==request.payload.id){
+              timers[i].runningSince=request.payload.stop;
+              break;
+            }
+          }
+          console.log('timers',timers)
+          
+          fs.writeFile(DATA_FILE, JSON.stringify(timers), err => {
+            if (err) throw err;
+            console.log("It's saved!");
+          });
+        }
+      });
+      // reply("Received your data");
     },
     payload: {
-      //设置如何处理负载请求
       parse: true
     }
   }
