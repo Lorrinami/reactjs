@@ -3,7 +3,7 @@ import isEmail from 'validator/lib/isEmail';//验证邮箱的外部导入方法
 import FieldComponent from '../forms/FieldComponent';
 import CourseSelect from '../remotedate/CourseSelect';
 
-export default class AsyncFetch extends React.Component{
+export default class ReomtePersist extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -11,19 +11,30 @@ export default class AsyncFetch extends React.Component{
             fieldErrors:{},
             people:[],
             _loading:false,//表示该组件私有的，parent and child不必要知道的值
+            _saveStatus:'READY',//READY,SAVING,SUCCESS,ERROR
         };
     
       }
     onFormSubmit(evt){
-        const people = this.state.people;
+        
         const person = this.state.fields;
 
         evt.preventDefault();
 
         if(this.validate()) return;
-        
-        people.push(person);
-        this.setState({people,fields:{}});
+        const people = [...this.state.people,person];
+        this.setState({_saveStatus:'SAVING'});
+        apiClient.savePeople(people)
+            .then(() => {
+                this.setState({
+                    people:people,
+                    fields:{},
+                    _saveStatus:'SUCCESS',
+                })
+            }).catch((err)=>{
+                console.error(err);
+                this.setState({_saveStatus:'ERROR'});
+            })
 
         // const people=[...this.state.people];
         // const person=this.state.fields;
@@ -44,7 +55,7 @@ export default class AsyncFetch extends React.Component{
         fields[name]=value;
         fieldErrors[name] = error;
 
-        this.setState({fields,fieldErrors});
+        this.setState({fields,fieldError,_saveStatus:'READY'});
         // const fields=this.state.fields;
         // fields[evt.target.name]=evt.target.value;
         // this.setState({fields});
@@ -66,8 +77,17 @@ export default class AsyncFetch extends React.Component{
         return false;
     }
 
+    componentWillMount(){//
+        this.setState({_loading:true});
+        apiClient.loadPeople().then((people) => {
+            this.setState({_loading:false,people:people});
+        })
+    }
 
     render(){
+        if(this.state._loading){
+            return <span>加载中...</span>
+        }
         return(
             <div>
                 <h1>Select Course</h1>
@@ -94,6 +114,21 @@ export default class AsyncFetch extends React.Component{
                         course={this.state.fields.course}
                         onChange={this.onInputChange}
                     />
+                    <br/>
+                    {{
+                        SAVING:<input value ='Saving...' type='submit' disable/>,
+                        SUCCESS:<input value='Saved!' type='submit' disable/>,
+                        ERROR:<input
+                            value='Save Failed - Retry?'
+                            type='submit'
+                            disabled={this.validate()}
+                        />,
+                        READY:<input 
+                            value='Submit'
+                            type='submit'
+                            disable={this.validate()}
+                        />
+                    }[this.state._saveStatus]}//处理不同的状态
                     <input type='submit'/>
                 </form>
                 <div>

@@ -12,20 +12,20 @@ var fetch = require("node-fetch"); //fetch网络请求,还有另外一个fetch�
 
 
 const TimersDashboard = React.createClass({
-  getTimers: function(success) {
-    return fetch("http://192.168.4.153:3004/api/timers", {
-      headers: {
-        Accept: "application/json"
-      }
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        return responseJson;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  },
+  // getTimers: function(success) {
+  //   return fetch("http://192.168.4.153:3004/api/timers", {
+  //     headers: {
+  //       Accept: "application/json"
+  //     }
+  //   })
+  //     .then((response) => response.json())
+  //     .then((responseJson) => {
+  //       return responseJson;
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // },
 
   getInitialState: function() {
     return {
@@ -92,7 +92,7 @@ const TimersDashboard = React.createClass({
     });
     apiClient.startTimer({
       id: timerId, start: now
-    })
+    }).then(this.loadTimersFromServer);
   },
   stopTimer: function(timerId) {
     const now = Date.now();
@@ -111,7 +111,7 @@ const TimersDashboard = React.createClass({
     });
     apiClient.stopTimer(
       {id: timerId, stop: now}
-    )
+    ).then(this.loadTimersFromServer);
   },
   updateTimer: function(attrs) {
     this.setState({

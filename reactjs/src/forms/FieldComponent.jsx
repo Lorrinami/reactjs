@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';//在子组件使用PropTypes
 
 export default class FieldComponent extends React.Component{
     constructor(props){
@@ -16,6 +16,7 @@ export default class FieldComponent extends React.Component{
     onChange(evt){
         const name =this.props.name;
         const value=evt.target.value;
+        //通过value传值
         const error = this.props.validate ? this.props.validate(value) : false;
 
         this.setState({value,error});
@@ -37,7 +38,7 @@ export default class FieldComponent extends React.Component{
     }
 }
 
-FieldComponent.propTypes={
+FieldComponent.propTypes={//使用PropTypes与父组件通信
     placeholder:PropTypes.string,
     name:PropTypes.string.isRequired,
     value:PropTypes.string,

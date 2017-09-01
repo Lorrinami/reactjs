@@ -35,7 +35,7 @@ export default class From extends React.Component{
     // onNameChange(evt){
     //     this.setState({name:evt.target.value});
     // }
-    onInputChange(name,value,error){
+    onInputChange(name,value,error){//子组件调用父组件方法改变值
         const fields = this.state.fields;
         const fieldErrors = this.state.fieldErrors;
 

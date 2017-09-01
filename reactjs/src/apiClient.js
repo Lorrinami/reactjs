@@ -71,26 +71,26 @@ export default class apiClient extends React.Component {
   }
 
   static startTimer(data){
-      fetch('http://192.168.4.153:3004/api/timer/start',{
+     return fetch('http://192.168.4.153:3004/api/timer/start',{
           method:'POST',
           body:JSON.stringify(data),
           headers:{
               'Accept': 'application/json',
               'Content-Type': 'application/json',
           }
-      }).then()
+      });
   }
 
 
   static stopTimer(data){
-      fetch('http://192.168.4.153:3004/api/timer/stop',{
+     return fetch('http://192.168.4.153:3004/api/timer/stop',{
           method:'POST',
           body:JSON.stringify(data),
           headers:{
               'Accept': 'application/json',
               'Content-Type': 'application/json'
           }
-      }).then()
+      });
   }
   /**
      * 普通的get请求 

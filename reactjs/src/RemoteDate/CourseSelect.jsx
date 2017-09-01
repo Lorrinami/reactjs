@@ -1,8 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 export default class CourseSelect extends React.Component{
+    constructor(props){
+        super(props);
+        this.state={
+            department:null,
+            course:null,
+            courses:[],
+            _loading:false,
+        }
+    }
+    // componentWillReceiveProps(update){//接收prop的修改更新界面
+    //     this.setState({
+    //         department:update.department,
+    //         course:update.course,
+    //         course:[],
+    //         _loading:false,
+    //     })
+    // }
 
-    componentWillReceiveProps(update){//接收prop的修改更新界面
+    componentWillReceiveProps(update){
         this.setState({
             department:update.department,
             course:update.course,
@@ -42,15 +59,7 @@ export default class CourseSelect extends React.Component{
         )
     }
 
-    constructor(props){
-        super(props);
-        this.state={
-            department:null,
-            course:null,
-            courses:[],
-            _loading:false,
-        }
-    }
+
 }
 
 CourseSelect.propTypes={
