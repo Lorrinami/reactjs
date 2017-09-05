@@ -17,7 +17,6 @@
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
-<<<<<<< HEAD
     "gh-pages": "^1.0.0",
     "babel-plugin-add-module-exports": "0.2.1"
   },
@@ -29,8 +28,4 @@
     "transform-es2015-modules-commonjs"
     ]
     }
-=======
-    "gh-pages": "^1.0.0"
-  }
->>>>>>> d035dc6670d4e896d8b5b5000173b0d6f7045f84
 }

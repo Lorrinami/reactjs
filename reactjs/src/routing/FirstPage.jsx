@@ -24,6 +24,8 @@ export default class FirstPage extends React.Component{
                 </ul>
                 <hr />
                 {/* We'll insert the Match components here */}
+                <Match pattern='/atlantic' component={Atlantic} />
+                <Match pattern='/pacific' component={Pacific} />
             </div>
         )
     }
@@ -48,3 +50,14 @@ const Pacific = () =>(
         </p>
     </div>
 );
+
+const Match = ({pattern,component: Component}) => {
+    const pathname = window.location.pathname;
+    if(pathname.match(pattern)){
+        return(
+            <Comment />
+        );
+    }else{
+        return null;
+    }
+}
