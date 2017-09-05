@@ -3,20 +3,29 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://duyongkang.github.io/reactjs/",
-  "dependencies": {//在production环境中，只加载这一项，在development环境中，json中的所有项都加载
+  "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-scripts": "1.0.10"//把所有的东西都工作起来的反应包脚本，开发依赖项
+    "react-scripts": "1.0.10"
   },
   "scripts": {
-    "start": "react-scripts start",//引导webpack开发HTTP服务器，此服务器将处理我们的网页访问
-    "build": "react-scripts build",//为了在生产中使用，这个命令创建了一个优化的、静待的所有我们包的资产。
-    "test": "react-scripts test --env=jsdom",//执行应用程序的测试套件，如果存在。
-    "eject": "react-scripts eject",//这使您能够放弃react-scripts提供的配置，调整为你喜欢的配置。
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "devDependencies": {//注意
-    "gh-pages": "^1.0.0"
-  }
+  "devDependencies": {
+    "gh-pages": "^1.0.0",
+    "babel-plugin-add-module-exports": "0.2.1"
+  },
+  "babel": {
+    "presets": [
+    "es2015"
+    ],
+    "plugins": [
+    "transform-es2015-modules-commonjs"
+    ]
+    }
 }
