@@ -50,12 +50,12 @@ const Pacific = () =>(
         </p>
     </div>
 );
-
+// 解构
 const Match = ({pattern,component: Component}) => {
     const pathname = window.location.pathname;
     if(pathname.match(pattern)){
         return(
-            <Comment />
+            <Component />
         );
     }else{
         return null;

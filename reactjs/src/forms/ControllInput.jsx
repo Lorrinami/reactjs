@@ -1,5 +1,5 @@
 import React from 'react';
-import isEmail from 'validator/lib/isEmail';//验证邮箱的外部导入方法
+import isEmail from '../../node_modules/validator/lib/isEmail';//验证邮箱的外部导入方法
 
 export default class ControllInput extends React.Component{
     constructor(props) {

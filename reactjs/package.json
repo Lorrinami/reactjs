@@ -4,6 +4,7 @@
   "private": true,
   "homepage": "https://duyongkang.github.io/reactjs/",
   "dependencies": {
+    "history": "^4.7.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.0.10"
@@ -22,10 +23,10 @@
   },
   "babel": {
     "presets": [
-    "es2015"
+      "es2015"
     ],
     "plugins": [
-    "transform-es2015-modules-commonjs"
+      "transform-es2015-modules-commonjs"
     ]
-    }
+  }
 }
