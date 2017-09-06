@@ -92,10 +92,16 @@ export default class ThridPage extends React.Component {
                 <code>/pacific</code>
               </Link>
             </li>
+            <li>
+              <Link to='/black-sea'>
+                <code>/black-sea</code>
+              </Link>
+            </li>
           </ul>
           <hr />
           <Match pattern="/atlantic" component={Atlantic} />
           <Match pattern="/pacific" component={Pacific} />
+          <Match patter="/black-sea" component={BlackSea}/>
         </div>
       </Router>
     );
@@ -130,7 +136,8 @@ class Router extends React.Component {
   }
 }
 
-
+//没有路由表的重定向
+//react-router提供了一个由可组合组件组成的声明式范例。在这里, 重定向被表示为仅仅是一个反应组件。
 class Redirect extends React.Component {
     static contextTypes = {
         history:React.PropTypes.object,
@@ -145,4 +152,34 @@ class Redirect extends React.Component {
     render(){
         return null;
     }
+}
+
+class BlackSea extends React.Component{
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      counter: 3,
+    }
+    
+  }
+  componentDidMount(){
+    setInterval(() => (
+      this.setState({counter:this.state.counter-1})
+    ),1000)
+  }
+  render(){
+    return(
+      <div>
+          <h3>BlackSea</h3>
+          <p>Nothing to sea [sic] here ...</p>
+          <p>Redirect in {this.state.counter}...</p>
+          {
+            (this.state.counter<1)?(
+              <Redirect to='/'/>
+            ):null
+          }
+      </div>
+    )
+  }
 }

@@ -3,7 +3,7 @@ import './Switch.css';
 
 const CREDITCARD = 'Creditcard';
 const BTC = 'Bitcoin';
-const Choice = function(props) {//通过props来传递数据
+const Choice = function(props) {//通过props来传递数据,state提到父组件
     let cssClasses = [];
     if(props.active) {
         cssClasses.push('active');
@@ -34,22 +34,6 @@ export default class Switch extends React.Component{
         }
     }
 
-    renderChoice(choice){
-        let cssClasses = [];
-
-        if(this.state.payMethod === choice) {
-            cssClasses.push('active');
-        }
-        return(
-            <div className='choice'
-                onClick={this.select(choice)}
-                className={cssClasses}
-            >
-                {choice}
-            </div>
-        )
-    }
-
     render(){
         return (
             <div className='switch' >
@@ -59,10 +43,10 @@ export default class Switch extends React.Component{
                   label='Pay with Creditcard'/>
 
                   <Choice
-                    onClick={thi.select(BTC)}
-                    active={thi.state.payMethod === BTC}
+                    onClick={this.select(BTC)}
+                    active={this.state.payMethod === BTC}
                     label='Pay with Bitcoin'/>
-                Pay with : {thi.state.payMethod}
+                Pay with : {this.state.payMethod}
             </div>
         )
     }
