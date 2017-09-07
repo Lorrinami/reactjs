@@ -9,6 +9,7 @@ import StatelessSwitch from './advancedcomponent/StatelessSwitch.jsx';
 import TimersDashboard from './secondpart/TimersDashboard';//复杂的交互
 import FirstPage from './routing/FirstPage.jsx';//改变url
 import SecondPage from './routing/SecondPage.jsx';//使用history
-import ThirdPage from './routing/ThirdPage.jsx';
-ReactDOM.render(<ThirdPage />, document.getElementById('root'));
+import ThirdPage from './routing/ThirdPage.jsx';//模拟router库的实现
+import Fourth from './routing/usinglibrary/ForthPage.jsx';
+ReactDOM.render(<Fourth />, document.getElementById('root'));
 registerServiceWorker();
