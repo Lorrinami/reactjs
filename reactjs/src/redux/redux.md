@@ -6,7 +6,7 @@ Redux’s key ideas  Redux是Flux的实现，应用于Redux的概念也适用于
 5.一个新的state是通过旧的state和一个被称为reducer函数的action生成
 Reducers必须是纯函数
 
-incrementAction->Dispatcher->Store->View
+Action->Dispatcher->Store->View
 
 在Redux中，store负责维护state和接受view中的操作。只有store才有权使用reducer:
 
