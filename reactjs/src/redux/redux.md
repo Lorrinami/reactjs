@@ -13,3 +13,17 @@ Action->Dispatcher->Store->View
 createStore():提供两个方法
 dispatch:我们如何向store发送操作
 getState:读取当前的state值
+
+
+redux管理复杂状态的优势：
+1.所有的数据都在中央数据结构中
+2.数据的变化是集中的
+3.View发出的动作与state的突变分离
+4.单向数据流可以很容易的跟踪系统的修改
+
+
+分解reducer的功能
+创建多个reducer, 每个reducer 管理不同的state.
+
+ReduxAppBreakUp:分解reducer
+![](../image/reducer_break_up.png)

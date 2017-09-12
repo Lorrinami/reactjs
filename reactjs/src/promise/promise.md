@@ -26,7 +26,7 @@ console.log(1); // 1, 2
 
 三种状态
 pending待定:初始状态，既不满足也不被拒绝。
-resolve完成:意思是操作成功完成。
+fulfilled完成:意思是操作成功完成。
 reject拒绝:意思是操作失败。
 
 对聚合多个Promise非常有用
@@ -164,7 +164,7 @@ Promise.all()如果有四个Promise会在一段时间后resolve，但是在这�
 Promise.race(iterable)异步
 
 (function(){
-    //传入的都未resolve，理论上会立即执行
+    //传入的都为resolve，理论上会立即执行
     var resolvedPromisesArray = [Promise.resolve(33), Promise.resolve(44)];
 
     var p = Promise.race(resolvedPromisesArray);
@@ -383,7 +383,7 @@ catch()返回一个Promise，只处理reject情况
 
     // logs:
     // > > > > > > called .catch on Promise{} with arguments: Arguments{1} [0: function XXX()]
-    // > > > > > 
+    // > > > > > > called .then on Promise{} with arguments: Arguments{2} [0: undefined, 1: function XXX()] 
 })()
 
 
@@ -425,46 +425,34 @@ p1.then(function(value) {
 
 
 then
-在未决状态下的承诺。处理函数(onFulfilled或onRejectd)被异步调用(当堆栈为空时)。调用处理程序函数后，如果处理程序函数:
+调用处理函数的返回结果
 
-返回一个值，然后返回的承诺以返回值作为其值解析;
-抛出一个错误，然后返回的承诺被抛出的错误作为其值而被拒绝;
-返回已解决的承诺，然后返回的承诺以该承诺的值作为其值;
-返回一个已经被拒绝的承诺，然后返回的承诺被拒绝，以该承诺的价值作为它的价值
-返回另一个未决的承诺对象
+返回一个值，Promise返回resolve，以返回值作为其值解析;
+抛出一个错误，Promise返回reject被抛出的错误作为其值;
+返回已解决的承诺，Promise返回resolve以resolve的值作为其值;
+返回一个已经被拒绝的承诺，Promise返回reject以reject值作为其值
+返回另一个pending的Promise,之后的状态依据这个pending,值也依据这个pending的返回值
 
 (function(){
     Promise.resolve('foo')
     // 1. Receive "foo", concatenate "bar" to it, and resolve that to the next then
     .then(function(string) {
-        return new Promise(function(resolve, reject) {//返回的为Promise，会执行完后才走下一个then
+        return new Promise(function(resolve, reject) {
         setTimeout(function() {
             string += 'bar';
-            console.log('first');
-            resolve(string);
+            resolve(string);//返回一个pending的Promise
         }, 1);
         });
     })
-    // 2. receive "foobar", register a callback function to work on that string
-    // and print it to the console, but not before returning the unworked on
-    // string to the next then
     .then(function(string) {
         setTimeout(function() {
         string += 'baz';
         console.log(string);
         }, 1)
-        return string;//因为返回的不是Promise
+        return string;//进入函数后会立即返回传递进来的字符串，不是拼接后的字符串，因为字符串拼接在setTimeout函数内。返回resolve
     })
-    // 3. print helpful messages about how the code in this section will be run
-    // before the string is actually processed by the mocked asynchronous code in the
-    // previous then block.  
     .then(function(string) {
-        console.log("Last Then:  oops... didn't bother to instantiate and return " +
-                    "a promise in the prior then so the sequence may be a bit " +
-                    "surprising");
-
-        // Note that `string` will not have the 'baz' bit of it at this point. This 
-        // is because we mocked that to happen asynchronously with a setTimeout function
+        console.log("surprising");
         console.log(string);
     });
 })()
@@ -563,3 +551,69 @@ myFirstPromise.then((successMessage) => {
 
 
 //里面没有setTimeout函数时，调用resole，打印状态为resolve，在setTimeout函数内调用时，打印为pending
+
+
+
+(function(){
+    // Throwing an error will call the catch method most of the time
+    var p1 = new Promise(function(resolve, reject) {
+    throw 'Uh-oh1!';
+    });
+
+    p1.catch(function(e) {
+    console.log(e); // "Uh-oh!"
+    });
+
+    // Errors thrown inside asynchronous functions will act like uncaught errors
+    var p2 = new Promise(function(resolve, reject) {
+    setTimeout(function() {
+        throw 'Uncaught Exception!';
+    }, 1000);//执行完该函数，状态变为resolve
+    });
+    console.log(p2);
+    p2.catch(function(e) {
+    console.log(e); // 捕捉不到异步函数抛出的错误
+    });
+
+    // Errors thrown inside asynchronous functions will act like uncaught errors
+    var p3= new Promise(function(resolve, reject) {
+    setTimeout(function() {
+        reject('Uh-oh3');
+    }, 1000);
+    });
+    console.log(p3);
+    p3.catch(function(e) {
+    console.log(e); // 可以捕获到异步函数中的reject
+    });
+
+    // Errors thrown after resolve is called will be silenced
+    var p4 = new Promise(function(resolve, reject) {
+    resolve();//注意前面提到过，resolve之后的代码会执行
+    reject();//明显，内部应该做过处理，只会执行第一个出现的回调函数，可在p3中加resolve测试
+    console.log('后面 的会执行');
+    throw 'Silenced Exception!';
+    });
+
+    p4.catch(function(e) {
+    console.log(e); // This is never called
+    });
+})()
+
+
+(function(){
+    var p1 = Promise.resolve("calling next");
+
+    var p2 = p1.catch(function (reason) {
+        //This is never called
+        console.log("catch p1!");
+        console.log(reason);
+    });
+
+    p2.then(function (value) {
+        console.log("next promise's onFulfilled"); /* next promise's onFulfilled */
+        console.log(value); /* calling next */
+    }, function (reason) {
+        console.log("next promise's onRejected");
+        console.log(reason);
+    });
+})()

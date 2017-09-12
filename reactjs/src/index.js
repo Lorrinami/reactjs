@@ -11,5 +11,7 @@ import FirstPage from './routing/FirstPage.jsx';//改变url
 import SecondPage from './routing/SecondPage.jsx';//使用history
 import ThirdPage from './routing/ThirdPage.jsx';//模拟router库的实现
 import Fourth from './routing/usinglibrary/ForthPage.jsx';
-ReactDOM.render(<Fourth />, document.getElementById('root'));
+import ReduxApp from './redux/ReduxApp.jsx';//使用reducer
+import ReduxApp1 from './redux/ReduxApp1.jsx';//复杂的聊天界面
+ReactDOM.render(<ReduxApp1 />, document.getElementById('root'));
 registerServiceWorker();
