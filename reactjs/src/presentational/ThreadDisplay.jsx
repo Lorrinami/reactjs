@@ -57,3 +57,34 @@ const Thread = (props) => {
         />
     </div>
 }
+
+class ThreadDisplay extends React.Component{
+    componentDidMount(){
+        store.subscribe(() => this.forceUpdate());
+    }
+
+    render(){
+        const state = store.getState();
+        const activeThreadId = state.activeThreadId;
+        const activeThread = state.threads.find(t => t.id === activeThreadId);
+
+        return(
+            <Thread
+                thread = {activeThread}
+                onMessageClick = {(id) => (
+                    store.dispatch({
+                        type:'DELETE_MESSAGE',
+                        id: id,
+                    })
+                )}
+                onMessageSubmit = {(text) => (
+                    store.dispatch({
+                        type: 'ADD_MESSAGE',
+                        text: text,
+                        threadId: activeThreadId,
+                    })
+                )}
+                />
+        )
+    }
+}

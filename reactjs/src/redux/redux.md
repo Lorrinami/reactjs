@@ -27,3 +27,7 @@ redux管理复杂状态的优势：
 
 ReduxAppBreakUp:分解reducer
 ![](../image/reducer_break_up.png)
+
+
+
+
