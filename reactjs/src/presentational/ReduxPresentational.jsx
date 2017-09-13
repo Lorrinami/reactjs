@@ -238,9 +238,10 @@ const TextFieldSubmit = (props) => {
 }
 
 const MessageList = (props) => {
-    <div className='ui comments'>
+    return(
+        <div className='ui comments'>
         {
-            props.message.map((m,index) => (
+            props.messages.map((m,index) => (
                 <div
                   className='comment'
                   key={index}
@@ -254,6 +255,7 @@ const MessageList = (props) => {
             ))
         }
     </div>
+    )
 }
 
 
