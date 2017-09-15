@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+
+<body>
+    <img width="170" class="img" height="51" title="点击回到简单学习网首页" alt="简单学习网" src="http://image.jiandan100.cn/images/common/logo_et.png">
+</body>
+<script>
+    var img1 = document.querySelector('.img');
+
+    img1.addEventListener('load', function () {
+        console.log('load-img');
+        // woo yey image loaded
+    });
+
+    img1.addEventListener('error', function () {
+        // argh everything's broken
+    });
+    //ready为图片返回Promise的方法
+    // img1.ready().then(function () {
+    //    console.log('load-img promise')
+    // }, function () {
+    //     // failed
+    // });
+
+    let promise = fetch("http://192.168.4.153:3004/api/timers", {
+        headers: {
+            Accept: "application/json"
+        }
+    })
+        .then(response => {
+            if (response.ok) {
+                return response.json(); //将字符串转换为json对象
+            }
+        })
+        .then(response => {              //通过返回一个从回调函数传递到的新值来改变新值。  
+            fetch("http://192.168.4.153:3004/api/timer/start", {
+                method: 'POST',
+                body: JSON.stringify({ id: response[0].id }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            })
+        })
+        .catch(error => {      //服务器宕机，可以捕获异常。
+            console.error(error);
+        });
+
+</script>
+
+</html>
