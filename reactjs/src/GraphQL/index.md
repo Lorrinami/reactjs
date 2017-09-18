@@ -22,3 +22,40 @@ GraphQL vs. REST
 
 
 Relay是Facebook的框架,示了用于连接反应GraphQL服务器组件。它允许您可以编写这样的代码，它显一个项目组件如何自动检索数据 来自hack的GraphQL服务器
+
+
+
+(function() {
+  var query = " { graphQLHub } ";
+  var options = {
+    method: "POST",
+    body: query,
+    headers: {
+      "content-type": "application/graphql"
+    }
+  };
+
+  window
+    .fetch("https://graphqlhub.com/graphql", options)
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      console.log(JSON.stringify(data, null, 2));
+    });
+})();
+
+
+1.创建一个HTTP服务器
+2.添加接受GraphQL请求的端点
+3.构建我们的GraphQL模式
+4.编写为我们模式中的每个GraphQL字段解析数据的glue -code
+5.支持GraphiQL，以便我们能够快速地调试和迭代
+
+
+
+
+npm install babel-register babel-preset-es2015 express --save --save-exact
+
+
+fuck 命令行中不支持单引号
