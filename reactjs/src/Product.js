@@ -1,5 +1,6 @@
 import React from 'react';
 import './Product.css';
+import '../src/semantic/semantic.css';
 const Product = React.createClass({
     handUpVote:function(){
         this.props.onVote(this.props.id);

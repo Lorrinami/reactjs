@@ -1,7 +1,7 @@
 import React from "react";
 import TimerForm from "./TimerForm";
 import "./ToggleableTimerForm.css";
-
+import '../semantic/semantic.css';
 const ToggleableTimerForm = React.createClass({
     getInitialState:function(){
         return{
@@ -26,11 +26,10 @@ const ToggleableTimerForm = React.createClass({
             />;
     } else {
       return (
-          <div className="add">
-            <button className=""
+          <div className="ui basic content center aligned segment">
+            <button className="ui basic button icon"
             onClick={this.handleFormOpen}>
-              添加
-              <i className="" />
+              <i className="plus icon" />
             </button>
           </div>
       );

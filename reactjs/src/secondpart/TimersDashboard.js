@@ -7,6 +7,7 @@ import Input from "../forms/Input.jsx";
 import ControllInput from "../forms/ControllInput.jsx";
 import Form from '../forms/Form.jsx';
 import apiClient from '../apiClient';
+import '../semantic/semantic.css';
 const uuidv4 = require("uuid/v4");
 var fetch = require("node-fetch"); //fetch网络请求,还有另外一个fetch库，注意区分不同。fetch默认为get请求。
 
@@ -129,7 +130,7 @@ const TimersDashboard = React.createClass({
   },
   render: function() {
     return (
-      <div className="">
+      <div className="ui three column centered grid">
         <div className="column">
           <EditableTimerList
             timers={this.state.timers}
@@ -141,11 +142,11 @@ const TimersDashboard = React.createClass({
 
          {apiClient.postTimers()}
           <ToggleableTimerForm onFormSubmit={this.handleCreateFormSubmit} />
-          <Button></Button>
+          {/* <Button></Button>
           <ButtonTwo></ButtonTwo>
           <ControllInput></ControllInput>
           <Input></Input>
-          <Form></Form>
+          <Form></Form> */}
         </div>
       </div>
     );

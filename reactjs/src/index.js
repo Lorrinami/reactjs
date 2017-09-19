@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-// import App from './App';
+import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import ProductList from './ProductList';
 import Switch from './advancedcomponent/Switch.jsx';
@@ -16,7 +16,7 @@ import ReduxApp1 from './redux/ReduxApp1.jsx';//复杂的聊天界面
 import ReduxAppBreakUp from './redux/ReduxAppBreakUp.jsx';//分解reducer
 import ReduxPresentational from './presentational/ReduxPresentational.jsx';
 import {ThreadApp} from './presentational/ThreadApp.jsx';
-import { Provider } from 'react-redux'//1和下一个同时开启
+import { Provider } from 'react-redux'//1和下一个同时开启 <Provider store={store}><ReactReduxApp/></Provider>
 import {ReactReduxApp} from './presentational/ReactReduxApp.jsx';//1
 import { createStore, combineReducers } from "redux";
 const uuidv4 = require("uuid/v4");
@@ -95,13 +95,6 @@ function threadsReducer(
     }
   }
   
-  // //reducer必须为纯函数
-  // function reducer(state = {}, action) {
-  //     return{
-  //         activeThreadId:activeThreadReducer(state.activeThreadId, action),
-  //         threads: threadsReducer(state.threads, action),
-  //     };
-  // }
   const reducer = combineReducers({
     activeThreadId: activeThreadReducer,
     threads: threadsReducer

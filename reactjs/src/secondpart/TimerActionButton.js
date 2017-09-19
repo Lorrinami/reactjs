@@ -1,11 +1,11 @@
 import React from 'react';
-
+import '../semantic/semantic.css';
 const TimerActionButton = React.createClass({
     render:function(){
         if(this.props.timerIsRunning){
             return(
                 <div
-                    className=''
+                    className='ui bottom attached red basic button'
                     onClick={this.props.onStopClick}
                 >
                     Stop
@@ -14,7 +14,7 @@ const TimerActionButton = React.createClass({
         }else{
             return(
             <div
-                className=''
+                className='ui bottom attached blue basic button'
                 onClick={this.props.onStartClick}
             >
                 Start

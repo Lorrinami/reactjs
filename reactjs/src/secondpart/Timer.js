@@ -2,7 +2,7 @@ import React from "react";
 import './Timer.css';
 import TimerActionButton from './TimerActionButton';
 import TimerOptionButton from './TimerOptionButton';
-
+import '../semantic/semantic.css';
 const Timer = React.createClass({
    getInitialState: function() {
     return {
@@ -79,21 +79,21 @@ const Timer = React.createClass({
   render: function() {
       const elapsedString = this.millisecondToDate(this.props.elapsed,this.props.runningSince);
       return(
-        <div className='test'
+        <div className='ui centered card'
         onMouseEnter={this.display} onMouseLeave={this.gone}>
-            <div className=''>
-                <div className= ''>
+            <div className='content'>
+                <div className= 'header'>
                     {this.props.title}
                 </div>
-                <div className=''>
+                <div className='meta'>
                     {this.props.project}
                 </div>
-                <div className=''>
+                <div className='center aligned description'>
                     <h2>
                         {elapsedString}
                     </h2>
                 </div>
-                <TimerOptionButton className=''
+                <TimerOptionButton 
                        onHandleTrashClick={this.handleTrashClick}
                        onEditClick={this.props.onEditClick}
                        isHover={this.state.hover}

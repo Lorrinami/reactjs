@@ -1,6 +1,6 @@
 import React from 'react';
 import EditableTimer from './EditableTimer';
-
+import '../semantic/semantic.css';
 const EditableTimerList = React.createClass({
     render:function(){
         const timers = this.props.timers.map((timer)=>(
