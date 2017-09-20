@@ -19,7 +19,6 @@ const createDatabase = () => {
 
 const insertData = () => {
     let { users, posts, usersFriends } = data;
-
     let queries = [
         tables.users.insert(users).toQuery(),
         tables.posts.insert(posts).toQuery(),
